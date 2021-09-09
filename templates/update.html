@@ -9,14 +9,31 @@
     .sample {
         position: relative;
         /* 今の位置を基準 */
-        left: 50px;
+        left: 80px;
         /* 左から20px */
     }
 </style>
 
 <form class=sample action='' method='POST'>
     {% csrf_token %}
+    <!--
     {{ form.as_p }}
+    -->
+    <p>
+        {{form.title.label}} : {{form.title}}
+    </p>
+    <p>
+        {{form.content.label}} : {{form.content}}
+    </p>
+    <p>
+        {{form.deadline.label}} : {{form.deadline}}
+    </p>
+    <p>
+        {{form.category.label}} : {{form.category}}
+    </p>
+    <p>
+        {{form.status.label}} : {{form.status}}
+    </p>
     <input type="submit" value='更新する'>
 </form>
 <br>

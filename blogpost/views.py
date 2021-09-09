@@ -25,6 +25,7 @@ def homeview(request):
     return render(request,'home.html')
 
 
+
 def signupview(request):
     print(request.method)
     if request.method == 'POST':
@@ -40,6 +41,18 @@ def signupview(request):
         print(User.objects.all())
         return render(request, 'signup.html')
     return render(request, 'signup.html')
+
+def guest(request):
+    if request.method == 'POST':
+        username_data = request.POST['username_data']
+        password_data = request.POST['password_data']
+        user = authenticate(request, username=username_data, password=password_data)
+        if user is not None:
+            login(request, user)
+            return redirect('list')
+        else:
+            return redirect('guest')
+    return render(request, 'guest.html')
 
 
 def loginview(request):
@@ -70,22 +83,22 @@ class BlogList(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         q_word = self.request.GET.get('query')
         #ページング別の方法
-        print(q_word)
+        #print(q_word)
         #page = self.request.GET.get('page')
 
         if q_word=="new":
-            object_list = BlogModel.objects.order_by("-postdate")
+            object_list = BlogModel.objects.order_by("postdate").filter(author=self.request.user)
+        elif q_word=="new2":
+            object_list = BlogModel.objects.order_by("deadline").filter(author=self.request.user)
         elif q_word:
-            object_list = BlogModel.objects.filter(Q(title__icontains=q_word)|Q(category__icontains=q_word))
+            object_list = BlogModel.objects.filter(author=self.request.user|Q(title__icontains=q_word)|Q(category__icontains=q_word))
         else:
             #object_list2 = Folder.objects.all()
-            object_list = BlogModel.objects.all()
+            #object_list = BlogModel.objects.all()
+            object_list = BlogModel.objects.order_by("-postdate").filter(author=self.request.user)
             #paginator = Paginator(object_list, 2)
             #pages = paginator.get_page(page)
         return object_list
-
-
-
 
 
 """
@@ -97,7 +110,6 @@ def ListView(request):
 
 
 
-
 class BlogDetail(DetailView):
     template_name = 'detail.html'
     model = BlogModel
@@ -106,8 +118,12 @@ class BlogDetail(DetailView):
 class BlogCreate(CreateView):
     template_name = 'create.html'
     model = BlogModel
-    fields = ('title','content','deadline','category','status')
+    fields = ('title','content','deadline','category','status','author')
     success_url =reverse_lazy('list')
+    def get_initial(self):
+        initial = super().get_initial()
+        initial["author"] = self.request.user
+        return initial
     #widgets = {'deadline': AdminDateWidget()}
 
 

@@ -32,14 +32,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #'blogpost',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blogpost.apps.BlogpostConfig'
+    'blogpost.apps.BlogpostConfig',
 ]
+#AUTH_USER_MODEL = "accounts.CustomUser"
+#AUTH_USER_MODEL = 'blogpost.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

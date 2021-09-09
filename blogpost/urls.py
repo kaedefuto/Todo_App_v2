@@ -8,7 +8,7 @@ urlpatterns = [
 """
 from django.urls import path
 
-from .views import  BlogList, BlogDetail, BlogCreate, BlogDelete, BlogUpdate, signupview, loginview, logoutview, homeview#,BlogCreate2
+from .views import  BlogList, BlogDetail, BlogCreate, BlogDelete, BlogUpdate, signupview, loginview, logoutview, homeview,guest#,BlogCreate2
 
 #from .views import ListView
 
@@ -23,6 +23,7 @@ urlpatterns = [
     path('delete/<int:pk>', BlogDelete.as_view(), name='delete'),
     path('update/<int:pk>', BlogUpdate.as_view(), name='update'),
     path('signup', signupview, name='signup'),
+    path('guest/', guest, name='guest'),
     path('login/', loginview, name='login'),
     path('logout/', logoutview, name='logout'),
     path('home/', homeview, name='home'),
