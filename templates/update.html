@@ -1,0 +1,33 @@
+{% extends 'base2.html' %}
+
+{% block header %}
+
+{% endblock header %}
+
+{% block content %}
+<style>
+    .sample {
+        position: relative;
+        /* 今の位置を基準 */
+        left: 50px;
+        /* 左から20px */
+    }
+</style>
+
+<form class=sample action='' method='POST'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value='更新する'>
+</form>
+<br>
+<p align="center">
+    {% if user.is_authenticated %}
+    <em>{{ user.username }}でログイン中</em><br />
+        <a href="{% url 'logout' %}">ログアウト</a>
+    {% else %}
+    <em>
+    ログインは<a href="{% url 'login' %}">こちら</a>
+    {% endif %}
+</p>
+</br>
+{% endblock content %}
