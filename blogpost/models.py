@@ -21,7 +21,6 @@ class Folder(models.Model):
 """
 
 
-
 #CATEGORY = (('business','ビジネス'),('life','生活'),('other','その他'))
 class BlogModel(models.Model):
 
@@ -35,6 +34,7 @@ class BlogModel(models.Model):
     category = models.CharField(max_length = 50)
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     author = models.ForeignKey(get_user_model(),on_delete=models.CASCADE)
+    #author = models.CharField(max_length=50)
     #user = models.ForeignKey(User, unique=False)
     #category = models.ForeignKey(Folder, on_delete=models.SET_NULL, null=True)
     """
@@ -44,4 +44,4 @@ class BlogModel(models.Model):
     )
     """
     def __str__(self):
-        return self.title
+        return self.author

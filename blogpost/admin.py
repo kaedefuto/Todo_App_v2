@@ -6,5 +6,4 @@ from .models import BlogModel
 admin.site.register(BlogModel)
 #admin.site.register(Folder)
 
-
 # Register your models here.

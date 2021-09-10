@@ -3,8 +3,9 @@ from django.shortcuts import render,redirect
 # Create your views here.
 #
 from django.views.generic import DetailView, CreateView, DeleteView, UpdateView, ListView
+from django.contrib.auth.views import PasswordChangeView, PasswordChangeDoneView
 
-from .models import BlogModel#, Folder
+from .models import BlogModel
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -19,6 +20,8 @@ from django.db.models import Q
 from django.views import generic
 
 #from django.contrib.admin.widgets import AdminDateWidget
+#ユーザの削除
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 def homeview(request):
@@ -33,7 +36,7 @@ def signupview(request):
         password_data = request.POST['password_data']
         try:
             user = User.objects.create_user(username_data, '', password_data)
-            return redirect('login')
+            return redirect('login1')
         except IntegrityError:
             return render(request, 'signup.html',
                           {'error': 'このユーザーは既に登録されています'})
@@ -64,8 +67,8 @@ def loginview(request):
             login(request, user)
             return redirect('list')
         else:
-            return redirect('login')
-    return render(request, 'login.html')
+            return redirect('login1')
+    return render(request, 'login1.html')
 
 
 def logoutview(request):
@@ -115,15 +118,22 @@ class BlogDetail(DetailView):
     model = BlogModel
 
 
+
+
 class BlogCreate(CreateView):
     template_name = 'create.html'
     model = BlogModel
-    fields = ('title','content','deadline','category','status','author')
-    success_url =reverse_lazy('list')
+    fields = ('title', 'content', 'deadline', 'category', 'status','author')
+    success_url = reverse_lazy('list')
+
+
     def get_initial(self):
         initial = super().get_initial()
         initial["author"] = self.request.user
         return initial
+
+
+
     #widgets = {'deadline': AdminDateWidget()}
 
 
@@ -131,6 +141,12 @@ class BlogDelete(DeleteView):
     template_name = 'delete.html'
     model = BlogModel
     success_url = reverse_lazy('list')
+
+
+class UserDelete(DeleteView):
+    template_name = 'userdelete.html'
+    model = User
+    success_url = reverse_lazy('home')
 
 
 class BlogUpdate(UpdateView):
@@ -146,3 +162,27 @@ class BlogCreate2(CreateView):
     fields = ('title',)
     success_url = reverse_lazy('list')
 """
+
+class PasswordChange(PasswordChangeView):
+    template_name = 'password_change1.html'
+    success_url = reverse_lazy('password_change_done1')
+
+
+class PasswordChangeDone(PasswordChangeDoneView):
+    template_name = 'password_change_done1.html'
+
+
+
+class OnlyYouMixin(UserPassesTestMixin):
+    raise_exception = True
+
+    def test_func(self):
+        user = self.request.user
+        return user.username == self.kwargs['username'] or user.is_superuser
+
+class UserDeleteView(OnlyYouMixin,DeleteView):
+    template_name = "userdelete.html"
+    success_url = reverse_lazy("home")
+    model = User
+    slug_field = 'username'
+    slug_url_kwarg = 'username'

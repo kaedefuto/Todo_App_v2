@@ -4,6 +4,7 @@
 {% endblock header %}
 
 {% block content %}
+{% if object.author == user %}
 <div class='container'>
     <div class="card">
         <h5 class="card-header">{{ object.title }}</h5>
@@ -17,14 +18,15 @@
             <a href="{% url 'delete' object.pk %}" class="btn btn-danger">削除する</a>
         </div>
     </div>
+{% endif %}
 <br>
 <p align="center">
     {% if user.is_authenticated %}
     <em>{{ user.username }}でログイン中</em><br />
-    <a href="{% url 'logout' %}">ログアウト</a>
+    <a href="{% url 'logout1' %}">ログアウト</a>
     {% else %}
     <em>
-        ログインは<a href="{% url 'login' %}">こちら</a>
+        ログインは<a href="{% url 'login1' %}">こちら</a>
         {% endif %}
 </p>
 </br>
