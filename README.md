@@ -2,7 +2,7 @@
 
 ## Djangoで作成したオリジナルTodoアプリ_V2
 
-version2.4
+version2.3
 
 https://kaedefuto.pythonanywhere.com/home/
 
