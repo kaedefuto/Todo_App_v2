@@ -6,6 +6,7 @@
 
 {% block content %}
 {% if object.author == user %}
+<!--
 <style>
     .sample {
         position: relative;
@@ -14,39 +15,50 @@
         /* 左から20px */
     }
 </style>
+-->
 
 <form class=sample action='' method='POST'>
-    {% csrf_token %}
-    <!--
-    {{ form.as_p }}
-    -->
-    <p>
-        {{form.title.label}} : {{form.title}}
-    </p>
-    <p>
-        {{form.content.label}} : {{form.content}}
-    </p>
-    <p>
-        {{form.deadline.label}} : {{form.deadline}}
-    </p>
-    <p>
-        {{form.category.label}} : {{form.category}}
-    </p>
-    <p>
-        {{form.status.label}} : {{form.status}}
-    </p>
-    <input type="submit" value='更新する'>
+    <div class='container'>
+        <div class="card">
+            <div class="card-body">
+                {% csrf_token %}
+                <!--
+                {{ form.as_p }}
+                -->
+                <p>
+                    {{form.title.label}} : {{form.title}}
+                </p>
+                <p>
+                    {{form.content.label}} : {{form.content}}
+                </p>
+                <p>
+                    {{form.deadline.label}} : {{form.deadline}}
+                </p>
+                <p>
+                    {{form.category.label}} : {{form.category}}
+                </p>
+                <p>
+                    {{form.status.label}} : {{form.status}}
+                </p>
+                <input type="submit" value='更新する'>
+            </div>
+        </div>
+    </div>
 </form>
 {% endif %}
+<br>
+<center>
+    <a href="{% url 'list' %}" class="btn btn-primary">戻る</a>
+</center>
 <br>
 <p align="center">
     {% if user.is_authenticated %}
     <em>{{ user.username }}でログイン中</em><br />
-        <a href="{% url 'logout1' %}">ログアウト</a>
+    <a href="{% url 'logout1' %}">ログアウト</a>
     {% else %}
     <em>
-    ログインは<a href="{% url 'login1' %}">こちら</a>
-    {% endif %}
+        ログインは<a href="{% url 'login1' %}">こちら</a>
+        {% endif %}
 </p>
 </br>
 {% endblock content %}

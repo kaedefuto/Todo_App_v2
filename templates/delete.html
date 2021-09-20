@@ -12,6 +12,10 @@
 </center>
 {% endif %}
 <br>
+<center>
+    <a href="{% url 'list' %}" class="btn btn-primary">戻る</a>
+</center>
+<br>
 <p align="center">
     {% if user.is_authenticated %}
     <em>{{ user.username }}でログイン中</em><br />

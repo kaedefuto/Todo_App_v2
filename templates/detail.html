@@ -14,8 +14,8 @@
             -->
             <p class="card-text">{{ object.content | linebreaksbr }}</p>
             <a href="{% url 'list' %}" class="btn btn-primary">一覧へ</a>
-            <a href="{% url 'update' object.pk %}" class="btn btn-success">編集する</a>
-            <a href="{% url 'delete' object.pk %}" class="btn btn-danger">削除する</a>
+            <a href="{% url 'update' object.pk %}" class="btn btn-success">編集</a>
+            <a href="{% url 'delete' object.pk %}" class="btn btn-danger">削除</a>
         </div>
     </div>
 {% endif %}

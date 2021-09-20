@@ -149,7 +149,6 @@ class UserDelete(DeleteView):
     success_url = reverse_lazy('home')
 """
 
-
 class BlogUpdate(UpdateView):
     template_name = 'update.html'
     model = BlogModel

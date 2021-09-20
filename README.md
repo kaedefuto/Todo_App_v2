@@ -2,8 +2,8 @@
 
 ## Djangoで作成したオリジナルTodoアプリ_V2
 
-version2.3
+version2.4
+
+変更点はguestログインで確認してください
 
 https://kaedefuto.pythonanywhere.com/home/
-
-

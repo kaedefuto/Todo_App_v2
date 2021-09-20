@@ -8,8 +8,8 @@ urlpatterns = [
 """
 from django.urls import path
 
-from .views import BlogList, BlogDetail, BlogCreate, BlogDelete, BlogUpdate, signupview, loginview, logoutview, homeview, guest, PasswordChange, PasswordChangeDone, UserDeleteView
-#,BlogCreate2UserDelete, 
+from .views import BlogList, BlogDetail, BlogCreate, BlogDelete, BlogUpdate, signupview, loginview, logoutview, homeview, guest, PasswordChange, PasswordChangeDone,  UserDeleteView
+#,BlogCreate2,UserDelete,
 
 #from .views import ListView
 
