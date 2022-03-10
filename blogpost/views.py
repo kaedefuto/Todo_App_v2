@@ -85,22 +85,25 @@ class BlogList(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         q_word = self.request.GET.get('query')
+        q_word2 = self.request.GET.get('query2')
         #ページング別の方法
         #print(q_word)
         #page = self.request.GET.get('page')
-
+        """
+        if q_word2:
+            object_list = BlogModel.objects.filter(author=self.request.user|Q(title__icontains=q_word2)|Q(category__icontains=q_word2))
+        """
         if q_word=="new":
             object_list = BlogModel.objects.order_by("postdate").filter(author=self.request.user)
         elif q_word=="new2":
             object_list = BlogModel.objects.order_by("deadline").filter(author=self.request.user)
-        elif q_word:
-            object_list = BlogModel.objects.filter(author=self.request.user|Q(title__icontains=q_word)|Q(category__icontains=q_word))
         else:
             #object_list2 = Folder.objects.all()
             #object_list = BlogModel.objects.all()
             object_list = BlogModel.objects.order_by("-postdate").filter(author=self.request.user)
             #paginator = Paginator(object_list, 2)
             #pages = paginator.get_page(page)
+
         return object_list
 
 
